@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+
 enum errors { alpha, blank, zero, character, others };
 
 void displayError(errors e) {
@@ -26,15 +27,10 @@ void displayError(errors e) {
 }
 
 class Calculator {
-    vector<double> nums;
-    vector<char> opers;
-    double result = 0;
+    enum m_opers { add='+', sub='-', mul='*', div='/' };
+    double m_result = 0;
 
     void calculate(string calLine);
-    double add(double x, double y);
-    double sub(double x, double y);
-    double mul(double x, double y);
-    double div(double x, double y);
 
 public:
     void displayMenu();     // display clear 필요

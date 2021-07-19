@@ -1,8 +1,11 @@
 #include "calculator.h"
 
 void Calculator::calculate(string calLine) {
+    vector<double> nums;
+    vector<char> opers;
     nums.clear();
     opers.clear();
+
     int s = 0;
     int i;
 
@@ -25,81 +28,58 @@ void Calculator::calculate(string calLine) {
             nums.push_back(num);
         }
 
+        // 입력한 수식이 정상적인지 확인
+        if(nums.size() != opers.size()+1) throw others;
+
         // 계산하기
-        result = nums[0];
+        m_result = nums[0];
         for(i=0; i<opers.size(); i++) {
             switch(opers[i]) {
-                case '+':   
-                    result = add(result, nums[i+1]);
+                case add:   
+                    m_result += nums[i+1];
                     break;
-                case '-':
-                    result = sub(result, nums[i+1]);
+                case sub:
+                    m_result -= nums[i+1];
                     break;
-                case '*':
-                    result = mul(result, nums[i+1]);
+                case mul:
+                    m_result *= nums[i+1];
                     break;
-                case '/':
-                    result = div(result, nums[i+1]);
+                case div:
+                    m_result /= nums[i+1];
                     break;
                 default:
                     throw others;
                     break;
             }
         }
-        cout << result << endl;
+        cout << m_result << endl;
     } catch (errors e) {
         displayError(e);
     }
 }
-
-double Calculator::add(double x, double y) {
-    return x + y;
-}
-
-double Calculator::sub(double x, double y) {
-    return x - y;
-}
-
-double Calculator::mul(double x, double y) {
-    return x * y;
-}
-
-double Calculator::div(double x, double y) {
-    if(y == 0) {
-        throw zero;
-    }
-    return x / y;
-}
-
 
 void Calculator::displayMenu() {
     cout << "< Calculator >" << endl;
     cout << "You can do numeric calculations. For example, 3+2-5." << endl;
     cout << "Please enter without spaces." << endl;
     cout << "* Operator : +, -, *, /" << endl;
-    cout << "* option 'r' or 'R': Restart" << endl;
+    cout << "* option 'm' or 'M': Menu" << endl;
     cout << "* option 'f' or 'F': Finish" << endl;
-    cout << "* option 'c' or 'C': Clear" << endl;
     cout << endl;
 }
 
 bool Calculator::checkContinue(string calLine) {
-    if (calLine == "r" || calLine == "R") {
-        // restart
-        result = 0;
+    if (calLine == "m" || calLine == "M") {
+        // Show menu
+        cout << endl;
         displayMenu();
-        cout << ">> ";
     } else if (calLine == "f" || calLine == "F") {
         // finish
         cout << "Thank you for using it." << endl;
         return false;
-    } else if (calLine == "c" || calLine == "C") {
-        // clear
-        displayMenu();
-        cout << ">> " << result << " ";
+    } else {
+        // calculate
+        calculate(calLine);
     }
-
-    // calculate
-    calculate(calLine);
     return true;
 }
