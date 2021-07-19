@@ -1,13 +1,13 @@
 #include "calculator.h"
 
-void Calculator::getValues(string calLine) {
+
+void Calculator::setValues(string calLine) {
     int s = 0;
     int i;
     for(i=0; i<calLine.length(); i++) {
-        // 알파벳을 입력한 경우
-        if(isalpha(calLine[i]) != 0) throw alpha;
-        // 띄어쓰기 에러 처리
-        if(calLine[i] == ' ') throw blank;
+        
+        if(isalpha(calLine[i]) != 0) throw alpha;   // 알파벳을 입력한 경우
+        if(calLine[i] == ' ') throw blank;          // 띄어쓰기 에러 처리
 
         if(!isdigit(calLine[i]) && calLine[i] != '.') {
             opers.push_back(calLine[i]);
@@ -16,10 +16,10 @@ void Calculator::getValues(string calLine) {
             nums.push_back(num);
         }
     }
-    if(s < i) {
-        double num = stod(calLine.substr(s, i));
-        nums.push_back(num);
-    }
+    if(s >= i) throw others;    // 연산자로 끝난 경우
+
+    double num = stod(calLine.substr(s, i));
+    nums.push_back(num);
 }
 
 double Calculator::getResult() {
@@ -36,10 +36,11 @@ double Calculator::getResult() {
                 result *= nums[i+1];
                 break;
             case div:
+                if(nums[i+1] == 0)  throw div_zero; // 0으로 나누는 경우
                 result /= nums[i+1];
                 break;
             default:
-                throw others;
+                throw others;   // 연산자가 아닌 경우
                 break;
         }
     }
@@ -51,8 +52,8 @@ void Calculator::calculate(string calLine) {
     opers.clear();
 
     try {
-        getValues(calLine); // nums와 opers 구하기
-
+        setValues(calLine); // nums와 opers 구하기
+        
         if(nums.size() != opers.size()+1) throw others; // 입력한 수식이 정상적인지 확인
 
         // 계산

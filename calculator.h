@@ -2,25 +2,25 @@
 #include <vector>
 using namespace std;
 
-enum errors { alpha, blank, zero, character, others };
+enum errors { alpha, blank, div_zero, character, others };
 
 void displayError(errors e) {
     cout << "Error: ";
     switch(e) {
         case alpha:
-            cout << "It is Invalid Format." << endl;
+            cout << "Alphabet is not allowed." << endl;
             break;
         case blank:
             cout << "Blanks cannot be entered." << endl;
             break;
-        case zero:
+        case div_zero:
             cout << "It cannot be divided by zero." << endl;
             break;
         case character:
             cout << "This is not an appropriate operator." << endl;
             break;
         default:
-            cout << "It cannot be calculated." << endl;
+            cout << "It is Invalid Format." << endl;
             break;
     }
     cout << "Please re-enter." << endl;
@@ -34,7 +34,7 @@ class Calculator {
     double m_result = 0;
 
     void calculate(string calLine);
-    void getValues(string calLine);
+    void setValues(string calLine);
     double getResult();
 
 public:
