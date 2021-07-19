@@ -28,9 +28,14 @@ void displayError(errors e) {
 
 class Calculator {
     enum m_opers { add='+', sub='-', mul='*', div='/' };
+
+    vector<double> nums;
+    vector<char> opers;
     double m_result = 0;
 
     void calculate(string calLine);
+    void getValues(string calLine);
+    double getResult();
 
 public:
     void displayMenu();     // display clear 필요
