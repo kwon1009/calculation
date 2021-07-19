@@ -27,7 +27,11 @@ void displayError(errors e) {
 }
 
 class Calculator {
-    enum m_opers { add='+', sub='-', mul='*', div='/' };
+    enum m_opers { 
+        add='+', sub='-', mul='*', div='/'
+        // f_pare='(', b_pare=')'
+        // 괄호 계산 추가시
+    };
 
     vector<double> nums;
     vector<char> opers;
@@ -35,7 +39,7 @@ class Calculator {
 
     void calculate(string calLine);
     void setValues(string calLine);
-    double getResult();
+    double getResult(int start, int end);
 
     void cal_mul(int i);
     void cal_div(int i);

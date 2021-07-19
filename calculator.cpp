@@ -36,16 +36,20 @@ void Calculator::cal_div(int i) {
     opers.erase(opers.begin()+i);
 }
 
-double Calculator::getResult() {
+double Calculator::getResult(int start, int end) {
+    int i;
+
     // 곱셈과 나눗셈 먼저 계산
-    int i=0;
-    while(i < opers.size()) {
+    i=start;
+    while(i < end) {
         switch(opers[i]) {
             case mul:
                 cal_mul(i);
+                end -= 1;
                 break;
             case div:
                 cal_div(i);
+                end -= 1;
                 break;
             default:
                 i++;
@@ -54,8 +58,8 @@ double Calculator::getResult() {
     }
 
     // 덧셈과 뺄셈 계산
-    double result = nums[0];
-    for(i=0; i<opers.size(); i++) {
+    double result = nums[start];
+    for(i=start; i<end; i++) {
         switch(opers[i]) {
             case add:   
                 result += nums[i+1];
@@ -81,7 +85,7 @@ void Calculator::calculate(string calLine) {
         if(nums.size() != opers.size()+1) throw others; // 입력한 수식이 정상적인지 확인
 
         // 계산
-        m_result = getResult();
+        m_result = getResult(0, opers.size());
         cout << m_result << endl;
     } catch (errors e) {
         displayError(e);
