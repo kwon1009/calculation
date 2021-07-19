@@ -37,6 +37,9 @@ class Calculator {
     void setValues(string calLine);
     double getResult();
 
+    void cal_mul(int i);
+    void cal_div(int i);
+
 public:
     void displayMenu();     // display clear 필요
     bool checkContinue(string calLine);

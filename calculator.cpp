@@ -22,22 +22,46 @@ void Calculator::setValues(string calLine) {
     nums.push_back(num);
 }
 
+void Calculator::cal_mul(int i) {
+    nums[i] = nums[i] * nums[i+1];
+    nums.erase(nums.begin()+i+1);
+    opers.erase(opers.begin()+i);
+}
+
+void Calculator::cal_div(int i) {
+    if(nums[i+1] == 0) throw div_zero; // 0으로 나누는 경우
+
+    nums[i] = nums[i] / nums[i+1];
+    nums.erase(nums.begin()+i+1);
+    opers.erase(opers.begin()+i);
+}
+
 double Calculator::getResult() {
+    // 곱셈과 나눗셈 먼저 계산
+    int i=0;
+    while(i < opers.size()) {
+        switch(opers[i]) {
+            case mul:
+                cal_mul(i);
+                break;
+            case div:
+                cal_div(i);
+                break;
+            default:
+                i++;
+                break;
+        }
+    }
+
+    // 덧셈과 뺄셈 계산
     double result = nums[0];
-    for(int i=0; i<opers.size(); i++) {
+    for(i=0; i<opers.size(); i++) {
         switch(opers[i]) {
             case add:   
                 result += nums[i+1];
                 break;
             case sub:
                 result -= nums[i+1];
-                break;
-            case mul:
-                result *= nums[i+1];
-                break;
-            case div:
-                if(nums[i+1] == 0)  throw div_zero; // 0으로 나누는 경우
-                result /= nums[i+1];
                 break;
             default:
                 throw others;   // 연산자가 아닌 경우
