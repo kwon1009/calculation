@@ -1,7 +1,6 @@
-#include <iostream> // 전처리지시자
+#include <iostream>
 #include "calculator.cpp"
 using namespace std;
-// std::cout
 
 int main() {
     Calculator cal;
