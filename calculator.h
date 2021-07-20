@@ -26,8 +26,6 @@ void displayError(errors e) {
 class Calculator {
     enum m_opers { 
         add='+', sub='-', mul='*', div='/'
-        // f_pare='(', b_pare=')'
-        // 괄호 계산 추가시
     };
 
     vector<double> nums;
@@ -42,6 +40,6 @@ class Calculator {
     void resetValue(int i);
 
 public:
-    void displayMenu();     // display clear 필요
+    void displayMenu();
     bool checkContinue(string calLine);
 };

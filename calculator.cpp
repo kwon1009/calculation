@@ -76,7 +76,6 @@ double Calculator::getResult(int start, int end) {
 }
 
 void Calculator::calculate(string calLine) {
-    m_lastCal = calLine;
     nums.clear();
     opers.clear();
 
@@ -86,6 +85,7 @@ void Calculator::calculate(string calLine) {
         if(nums.size() != opers.size()+1) throw others; // 입력한 수식이 정상적인지 확인
 
         // 계산
+        m_lastCal = calLine;
         m_result = getResult(0, opers.size());
         cout << m_result << endl;
     } catch (errors e) {
@@ -98,7 +98,7 @@ void Calculator::displayMenu() {
     cout << "You can do numeric calculations. For example, 3+2-5." << endl;
     cout << "Please enter without spaces." << endl;
     cout << "* Operator : +, -, *, /" << endl;
-    cout << "* option 'm' or 'M': Menu" << endl;
+    cout << "* option 'm' or 'M': Show Menu" << endl;
     cout << "* option 'h' or 'H': Last Calculate" << endl;
     cout << "* option 'f' or 'F': Finish" << endl;
     cout << endl;
