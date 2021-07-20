@@ -10,13 +10,15 @@ void Calculator::setValues(string calLine) {
         if(calLine[i] == ' ') throw blank;          // 띄어쓰기 에러 처리
 
         if(!isdigit(calLine[i]) && calLine[i] != '.') {
+            if(!isdigit(calLine[i+1]) && calLine[i+1] != '.') throw others; // 연산자를 연속으로 입력한 경우
+
             opers.push_back(calLine[i]);
             double num = stod(calLine.substr(s, i));
             s = i + 1;
             nums.push_back(num);
         }
     }
-    if(s >= i) throw others;    // 연산자로 끝난 경우
+    if(s >= calLine.length()) throw others;    // 연산자로 끝난 경우
 
     double num = stod(calLine.substr(s, i));
     nums.push_back(num);
