@@ -36,6 +36,18 @@ void Calculator::cal_div(int i) {
     opers.erase(opers.begin()+i);
 }
 
+void Calculator::cal_add(int i) {
+    nums[i] = nums[i] + nums[i+1];
+    nums.erase(nums.begin()+i+1);
+    opers.erase(opers.begin()+i);
+}
+
+void Calculator::cal_sub(int i) {
+    nums[i] = nums[i] - nums[i+1];
+    nums.erase(nums.begin()+i+1);
+    opers.erase(opers.begin()+i);
+}
+
 double Calculator::getResult(int start, int end) {
     int i;
 
@@ -58,24 +70,26 @@ double Calculator::getResult(int start, int end) {
     }
 
     // 덧셈과 뺄셈 계산
-    double result = nums[start];
     for(i=start; i<end; i++) {
         switch(opers[i]) {
             case add:   
-                result += nums[i+1];
+                cal_add(i);
+                end -= 1;
                 break;
             case sub:
-                result -= nums[i+1];
+                cal_sub(i);
+                end -= 1;
                 break;
             default:
                 throw others;   // 연산자가 아닌 경우
                 break;
         }
     }
-    return result;
+    return nums[0];
 }
 
 void Calculator::calculate(string calLine) {
+    m_lastCal = calLine;
     nums.clear();
     opers.clear();
 
@@ -98,6 +112,7 @@ void Calculator::displayMenu() {
     cout << "Please enter without spaces." << endl;
     cout << "* Operator : +, -, *, /" << endl;
     cout << "* option 'm' or 'M': Menu" << endl;
+    cout << "* option 'h' or 'H': Last Calculate" << endl;
     cout << "* option 'f' or 'F': Finish" << endl;
     cout << endl;
 }
@@ -107,6 +122,8 @@ bool Calculator::checkContinue(string calLine) {
         // Show menu
         cout << endl;
         displayMenu();
+    } else if (calLine == "h" || calLine == "H") {
+        cout << m_lastCal << endl;
     } else if (calLine == "f" || calLine == "F") {
         // finish
         cout << "Thank you for using it." << endl;

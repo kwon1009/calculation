@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-enum errors { alpha, blank, div_zero, character, others };
+enum errors { alpha, blank, div_zero, others };
 
 void displayError(errors e) {
     cout << "Error: ";
@@ -15,9 +15,6 @@ void displayError(errors e) {
             break;
         case div_zero:
             cout << "It cannot be divided by zero." << endl;
-            break;
-        case character:
-            cout << "This is not an appropriate operator." << endl;
             break;
         default:
             cout << "It is Invalid Format." << endl;
@@ -36,6 +33,7 @@ class Calculator {
     vector<double> nums;
     vector<char> opers;
     double m_result = 0;
+    string m_lastCal = "0";
 
     void calculate(string calLine);
     void setValues(string calLine);
@@ -43,6 +41,8 @@ class Calculator {
 
     void cal_mul(int i);
     void cal_div(int i);
+    void cal_add(int i);
+    void cal_sub(int i);
 
 public:
     void displayMenu();     // display clear 필요
