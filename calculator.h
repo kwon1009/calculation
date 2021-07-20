@@ -39,10 +39,7 @@ class Calculator {
     void setValues(string calLine);
     double getResult(int start, int end);
 
-    void cal_mul(int i);
-    void cal_div(int i);
-    void cal_add(int i);
-    void cal_sub(int i);
+    void resetValue(int i);
 
 public:
     void displayMenu();     // display clear 필요

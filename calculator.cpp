@@ -22,28 +22,7 @@ void Calculator::setValues(string calLine) {
     nums.push_back(num);
 }
 
-void Calculator::cal_mul(int i) {
-    nums[i] = nums[i] * nums[i+1];
-    nums.erase(nums.begin()+i+1);
-    opers.erase(opers.begin()+i);
-}
-
-void Calculator::cal_div(int i) {
-    if(nums[i+1] == 0) throw div_zero; // 0으로 나누는 경우
-
-    nums[i] = nums[i] / nums[i+1];
-    nums.erase(nums.begin()+i+1);
-    opers.erase(opers.begin()+i);
-}
-
-void Calculator::cal_add(int i) {
-    nums[i] = nums[i] + nums[i+1];
-    nums.erase(nums.begin()+i+1);
-    opers.erase(opers.begin()+i);
-}
-
-void Calculator::cal_sub(int i) {
-    nums[i] = nums[i] - nums[i+1];
+void Calculator::resetValue(int i) {
     nums.erase(nums.begin()+i+1);
     opers.erase(opers.begin()+i);
 }
@@ -56,11 +35,15 @@ double Calculator::getResult(int start, int end) {
     while(i < end) {
         switch(opers[i]) {
             case mul:
-                cal_mul(i);
+                nums[i] = nums[i] * nums[i+1];  
+                resetValue(i);
                 end -= 1;
                 break;
             case div:
-                cal_div(i);
+                if(nums[i+1] == 0) throw div_zero; // 0으로 나누는 경우
+                
+                nums[i] = nums[i] / nums[i+1];   
+                resetValue(i);
                 end -= 1;
                 break;
             default:
@@ -73,11 +56,13 @@ double Calculator::getResult(int start, int end) {
     for(i=start; i<end; i++) {
         switch(opers[i]) {
             case add:   
-                cal_add(i);
+                nums[i] = nums[i] + nums[i+1];   
+                resetValue(i);
                 end -= 1;
                 break;
             case sub:
-                cal_sub(i);
+                nums[i] = nums[i] - nums[i+1];   
+                resetValue(i);
                 end -= 1;
                 break;
             default:
